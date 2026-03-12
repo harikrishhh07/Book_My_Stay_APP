@@ -7,10 +7,6 @@ class RoomInventory {
 
     public RoomInventory() {
         roomAvailability = new HashMap<>();
-        initializeInventory();
-    }
-
-    private void initializeInventory() {
         roomAvailability.put("Single", 5);
         roomAvailability.put("Double", 3);
         roomAvailability.put("Suite", 2);
@@ -19,9 +15,25 @@ class RoomInventory {
     public Map<String, Integer> getRoomAvailability() {
         return roomAvailability;
     }
+}
 
-    public void updateAvailability(String roomType, int count) {
-        roomAvailability.put(roomType, count);
+class RoomSearchService {
+
+    public void searchAvailableRooms(RoomInventory inventory) {
+
+        Map<String, Integer> availability = inventory.getRoomAvailability();
+
+        if (availability.get("Single") > 0) {
+            System.out.println("Single Room Available: " + availability.get("Single"));
+        }
+
+        if (availability.get("Double") > 0) {
+            System.out.println("Double Room Available: " + availability.get("Double"));
+        }
+
+        if (availability.get("Suite") > 0) {
+            System.out.println("Suite Room Available: " + availability.get("Suite"));
+        }
     }
 }
 
@@ -31,10 +43,10 @@ public class HotelManagementSystem {
 
         RoomInventory inventory = new RoomInventory();
 
-        System.out.println("Room Availability:");
+        RoomSearchService searchService = new RoomSearchService();
 
-        for (Map.Entry<String, Integer> entry : inventory.getRoomAvailability().entrySet()) {
-            System.out.println(entry.getKey() + " Rooms Available: " + entry.getValue());
-        }
+        System.out.println("Available Rooms:");
+
+        searchService.searchAvailableRooms(inventory);
     }
 }
